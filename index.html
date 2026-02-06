@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>I Love You Swayyam Singhi</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            transition: background 1s ease;
+            position: relative;
+            padding: 20px;
+        }
+
+        /* Initial screen - Light pink with polka dots */
+        .initial-screen {
+            background: linear-gradient(135deg, #ffb6c1, #ffccd5);
+        }
+
+        /* Final screen - Sky blue gradient */
+        .final-screen {
+            background: linear-gradient(135deg, #87CEEB, #E0F7FF, #B3E5FC);
+        }
+
+        /* Polka dots for initial screen */
+        .polka-dots {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .dot {
+            position: absolute;
+            background-color: rgba(255, 255, 255, 0.4);
+            border-radius: 50%;
+            animation: float 20s infinite linear;
+        }
+
+        /* Sunflowers for final screen */
+        .sunflowers {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            opacity: 0.7;
+            display: none;
+            z-index: 1;
+        }
+
+        .sunflower {
+            position: absolute;
+            font-size: 28px;
+            animation: floatSunflower 25s infinite linear;
+            opacity: 0.8;
+        }
+
+        /* Floating animations */
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) translateX(0) rotate(0deg);
+            }
+            100% {
+                transform: translateY(-100px) translateX(100px) rotate(360deg);
+            }
+        }
+
+        @keyframes floatSunflower {
+            0% {
+                transform: translateY(100vh) translateX(0) rotate(0deg);
+            }
+            100% {
+                transform: translateY(-100px) translateX(-100px) rotate(720deg);
+            }
+        }
+
+        /* Main container */
+        .container {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            max-width: 900px;
+            width: 100%;
+            padding: 40px 30px;
+            background-color: rgba(0, 0, 0, 0.15);
+            border-radius: 25px;
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+            transition: all 0.5s ease;
+        }
+
+        /* Text styling */
+        .question-text {
+            color: white;
+            font-size: clamp(2.5rem, 6vw, 3.75rem);
+            font-weight: 800;
+            margin-bottom: 50px;
+            line-height: 1.2;
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
+            font-family: 'Quicksand', sans-serif;
+            letter-spacing: -0.5px;
+        }
+
+        .love-text {
+            color: white;
+            font-size: clamp(2.5rem, 6vw, 3.75rem);
+            font-weight: 800;
+            margin-bottom: 40px;
+            line-height: 1.2;
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
+            font-family: 'Quicksand', sans-serif;
+            letter-spacing: -0.5px;
+            display: none;
+        }
+
+        /* Buttons container */
+        .buttons-container {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            flex-wrap: wrap;
+            margin-top: 30px;
+            position: relative;
+        }
+
+        /* Button styling */
+        .btn {
+            padding: 22px 55px;
+            font-size: 1.8rem;
+            font-weight: 700;
+            border: none;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            min-width: 180px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            font-family: 'Poppins', sans-serif;
+            letter-spacing: 0.5px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: 0.5s;
+        }
+
+        .btn:hover:before {
+            left: 100%;
+        }
+
+        .btn-yes {
+            background: linear-gradient(to right, #4CAF50, #2E7D32);
+            color: white;
+            z-index: 10;
+        }
+
+        .btn-yes:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 25px rgba(0, 0, 0, 0.3);
+            background: linear-gradient(to right, #388E3C, #1B5E20);
+        }
+
+        .btn-no {
+            background: linear-gradient(to right, #F44336, #C62828);
+            color: white;
+            position: relative;
+            transition: all 0.2s ease;
+        }
+
+        .btn-no:hover {
+            background: linear-gradient(to right, #D32F2F, #B71C1C);
+        }
+
+        /* Image display section */
+        .image-display {
+            display: none;
+            margin-top: 40px;
+            flex-direction: column;
+            align-items: center;
+            animation: fadeIn 1.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .couple-image {
+            max-width: 100%;
+            max-height: 400px;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            object-fit: cover;
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .container {
+                padding: 30px 20px;
+            }
+            
+            .question-text, .love-text {
+                font-size: clamp(2rem, 7vw, 3rem);
+                margin-bottom: 40px;
+            }
+            
+            .btn {
+                padding: 18px 40px;
+                font-size: 1.6rem;
+                min-width: 150px;
+            }
+            
+            .buttons-container {
+                gap: 25px;
+            }
+            
+            .couple-image {
+                max-height: 300px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 15px;
+            }
+            
+            .container {
+                padding: 25px 15px;
+            }
+            
+            .question-text, .love-text {
+                font-size: 2rem;
+                margin-bottom: 35px;
+            }
+            
+            .btn {
+                padding: 16px 35px;
+                font-size: 1.4rem;
+                min-width: 130px;
+            }
+            
+            .buttons-container {
+                gap: 20px;
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .couple-image {
+                max-height: 250px;
+            }
+        }
+    </style>
+</head>
+<body class="initial-screen">
+    <!-- Polka dots for initial screen -->
+    <div class="polka-dots" id="polkaDots"></div>
+    
+    <!-- Sunflowers for final screen -->
+    <div class="sunflowers" id="sunflowers"></div>
+    
+    <!-- Main container -->
+    <div class="container">
+        <!-- Initial question text -->
+        <div class="question-text" id="questionText">
+            I love you Swayyam Singhi. Do you love me?
+        </div>
+        
+        <!-- Final love text -->
+        <div class="love-text" id="loveText">
+            I knew it. But still I love you more.
+        </div>
+        
+        <!-- Buttons container -->
+        <div class="buttons-container" id="buttonsContainer">
+            <button class="btn btn-yes" id="yesBtn">YES</button>
+            <button class="btn btn-no" id="noBtn">NO</button>
+        </div>
+        
+        <!-- Image display section -->
+        <div class="image-display" id="imageDisplay">
+            <img id="coupleImage" class="couple-image" src="" alt="Me and Swayyam">
+        </div>
+    </div>
+
+    <script>
+        // DOM elements
+        const body = document.body;
+        const yesBtn = document.getElementById('yesBtn');
+        const noBtn = document.getElementById('noBtn');
+        const questionText = document.getElementById('questionText');
+        const loveText = document.getElementById('loveText');
+        const buttonsContainer = document.getElementById('buttonsContainer');
+        const imageDisplay = document.getElementById('imageDisplay');
+        const coupleImage = document.getElementById('coupleImage');
+        const polkaDots = document.getElementById('polkaDots');
+        const sunflowers = document.getElementById('sunflowers');
+
+        // Create floating polka dots
+        for (let i = 0; i < 60; i++) {
+            const dot = document.createElement('div');
+            dot.className = 'dot';
+            
+            // Random size between 10px and 40px
+            const size = 10 + Math.random() * 30;
+            dot.style.width = `${size}px`;
+            dot.style.height = `${size}px`;
+            
+            // Random position
+            dot.style.left = `${Math.random() * 100}%`;
+            
+            // Random animation duration and delay
+            dot.style.animationDuration = `${15 + Math.random() * 25}s`;
+            dot.style.animationDelay = `${Math.random() * 5}s`;
+            
+            // Random opacity
+            dot.style.opacity = `${0.2 + Math.random() * 0.3}`;
+            
+            polkaDots.appendChild(dot);
+        }
+
+        // Create floating sunflowers
+        for (let i = 0; i < 35; i++) {
+            const sunflower = document.createElement('div');
+            sunflower.className = 'sunflower';
+            sunflower.innerHTML = '🌻';
+            sunflower.style.left = `${Math.random() * 100}%`;
+            sunflower.style.animationDuration = `${20 + Math.random() * 30}s`;
+            sunflower.style.animationDelay = `${Math.random() * 5}s`;
+            sunflower.style.fontSize = `${20 + Math.random() * 25}px`;
+            sunflowers.appendChild(sunflower);
+        }
+
+        // Move the "No" button when trying to click or hover over it
+        noBtn.addEventListener('mouseover', function() {
+            moveNoButton();
+        });
+
+        noBtn.addEventListener('touchstart', function(e) {
+            e.preventDefault();
+            moveNoButton();
+        });
+
+        noBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            moveNoButton();
+        });
+
+        function moveNoButton() {
+            const containerRect = buttonsContainer.getBoundingClientRect();
+            const buttonRect = noBtn.getBoundingClientRect();
+            
+            // Calculate safe area (leaving some margin)
+            const margin = 20;
+            const maxX = containerRect.width - buttonRect.width - margin;
+            const maxY = containerRect.height - buttonRect.height - margin;
+            
+            // Generate random position within container
+            const randomX = Math.random() * maxX;
+            const randomY = Math.random() * maxY;
+            
+            // Ensure the button doesn't go out of bounds
+            const safeX = Math.max(margin, Math.min(randomX, maxX));
+            const safeY = Math.max(margin, Math.min(randomY, maxY));
+            
+            // Move the button with a smooth transition
+            noBtn.style.transition = 'all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
+            noBtn.style.transform = `translate(${safeX}px, ${safeY}px)`;
+            
+            // Add a fun wobble effect
+            setTimeout(() => {
+                noBtn.style.transition = 'all 0.2s ease';
+            }, 400);
+        }
+
+        // "Yes" button click handler
+        yesBtn.addEventListener('click', function() {
+            // Change background to sky blue gradient
+            body.classList.remove('initial-screen');
+            body.classList.add('final-screen');
+            
+            // Show the love text and hide the question text
+            questionText.style.display = 'none';
+            loveText.style.display = 'block';
+            
+            // Hide the buttons
+            buttonsContainer.style.display = 'none';
+            
+            // Show the image immediately
+            imageDisplay.style.display = 'flex';
+            
+            // Hide polka dots and show sunflowers
+            polkaDots.style.display = 'none';
+            sunflowers.style.display = 'block';
+            
+            // Add some animation to the container
+            const container = document.querySelector('.container');
+            container.style.transform = 'scale(1.03)';
+            container.style.backgroundColor = 'rgba(0, 0, 0, 0.1)';
+            
+            setTimeout(() => {
+                container.style.transform = 'scale(1)';
+            }, 300);
+        });
+
+        // IMPORTANT: Replace this URL with your actual image URL
+        // You can upload your image to a service like Imgur, Google Drive, Dropbox, etc.
+        // and then paste the direct image URL here
+        const yourImageUrl = "https://i.postimg.cc/0yqRsWPt/112.jpg";
+        
+        // Set your image as the source
+        coupleImage.src = yourImageUrl;
+        
+        // Add event listener to ensure image loads
+        coupleImage.onload = function() {
+            // Once image loads, add a nice fade-in effect
+            coupleImage.style.opacity = '0';
+            coupleImage.style.transition = 'opacity 1.5s ease';
+            
+            setTimeout(() => {
+                coupleImage.style.opacity = '1';
+            }, 300);
+        };
+        
+        coupleImage.onerror = function() {
+            // If there's an error loading the image, show a placeholder
+            coupleImage.src = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='600' height='400' viewBox='0 0 600 400'%3E%3Crect width='600' height='400' fill='%23f0f8ff'/%3E%3Ccircle cx='200' cy='150' r='80' fill='%23ffccd5'/%3E%3Ccircle cx='400' cy='150' r='80' fill='%23b3e5fc'/%3E%3Cpath d='M100,250 Q300,350 500,250' stroke='%234CAF50' stroke-width='12' fill='none'/%3E%3Ctext x='300' y='350' font-family='Arial' font-size='32' text-anchor='middle' fill='%23333'%3EYou & Swayyam%3C/text%3E%3C/svg%3E";
+            coupleImage.alt = "Placeholder image - Replace with your picture URL";
+        };
+    </script>
+</body>
+</html>
